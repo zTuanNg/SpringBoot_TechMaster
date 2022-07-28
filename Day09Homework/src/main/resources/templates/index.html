@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Cars</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div>
+            <a th:href="@{/}" class="btn btn-primary mt-3 mb-3">Back Home</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <a th:href="@{/new}" class="btn btn-primary mt-3 mb-3">Add Car</a>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <form th:action="@{/}" method="get" >
+            <input type="text" name="keyword" />
+            <button class="btn btn-primary" type="submit">Go</button>
+
+        </form>
+
+    </div>
+
+    <div class="row">
+
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <td>ID</td>
+                <td>Image</td>
+                <td><a th:href="@{/sort}"><span>Model</span></a></td>
+<!--                <td>Model</td>-->
+                <td>Brand</td>
+                <td>Year</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "car:${cars} ">
+
+                <td>[[${car.id}]]</td>
+                <td> <img style="width:100px" th:src="@{${car.image}}"></td>
+                <td>[[${car.model}]]</td>
+                <td>[[${car.brand}]]</td>
+                <td>[[${car.year}]]</td>
+
+                <td>
+                    <a th:href="@{/edit/{id} (id=${car.id})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{/delete/{id} (id=${car.id})}" class="btn btn-warning">Delete</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+</body>
+</html>
