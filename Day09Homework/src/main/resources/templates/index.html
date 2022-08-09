@@ -24,7 +24,8 @@
 
     <div class="row mb-3">
         <form th:action="@{/}" method="get" >
-            <input type="text" name="keyword" />
+            <input type="search" name="kw1" />
+            <input type="search" name="kw2" />
             <button class="btn btn-primary" type="submit">Go</button>
 
         </form>
@@ -49,7 +50,8 @@
             <tr th:each = "car:${cars} ">
 
                 <td>[[${car.id}]]</td>
-                <td> <img style="width:100px" th:src="@{${car.image}}"></td>
+                <td> <img style="width:100px" th:src="@{${car.randomImagePath}}"></td>
+
                 <td>[[${car.model}]]</td>
                 <td>[[${car.brand}]]</td>
                 <td>[[${car.year}]]</td>

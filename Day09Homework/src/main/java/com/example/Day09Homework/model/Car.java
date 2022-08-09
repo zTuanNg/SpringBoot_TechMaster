@@ -45,8 +45,12 @@ public class Car {
         return getClass().hashCode();
     }
 
+    @Transient
     public String randomImagePath(){
         int rdNUmber = (int) (Math.floor(Math.random()*4)+1);
-        return "/Cars/"+rdNUmber+".jpeg";
+//        return "/Cars/"+rdNUmber+".jpeg";
+        return "/car-photos/" + this.id +"/" + this.image;
+
+
     }
 }

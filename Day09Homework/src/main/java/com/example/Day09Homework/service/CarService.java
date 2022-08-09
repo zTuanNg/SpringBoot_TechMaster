@@ -25,8 +25,8 @@ public class CarService {
        repo.deleteById(id);
     }
 
-    public void save(Car car){
-        repo.save(car);
+    public Car save(Car car){
+        return repo.save(car);
     }
 
     public Car getById(Integer id){
