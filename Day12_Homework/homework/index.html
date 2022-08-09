@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .form {
+                display: flex;
+            }
+            .result {
+                width: 300px;
+                height: 400px;
+                border: 1px solid #ccc;
+            }
+            img {
+                max-width: 100%;
+                display: block;
+                margin: auto;
+                object-fit: cover;
+            }
+
+            .hidden{
+                display: none;
+
+            }
+
+           
+        </style>
+    </head>
+    <body>
+        <h1>Breed List</h1>
+        <div class="form">
+            <!-- <p>https://dog.ceo/api/breed/</p> -->
+            <select id="breed-list">
+                <!-- Render danh sách breed vào đây -->
+                
+            </select>
+            <button id="btn">Get Sub Breed</button>
+        </div>
+
+        <h1>Sub Breed List</h1>
+        <div class="sub">
+            <ul id="sub-breed-list"></ul>
+        </div>
+
+        <div class="result ">
+            <img id="image" class="hidden" src="" alt="dog" />
+        </div>
+
+
+      
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="./main.js"></script>
+
+    </body>
+</html>
+ 
