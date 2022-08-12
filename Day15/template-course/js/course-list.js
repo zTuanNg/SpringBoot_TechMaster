@@ -1,4 +1,4 @@
-const URL_API = "http://localhost:8080/api/v1/courses";
+const URL_API = "http://localhost:8080";
 
 
 const courseList = document.querySelector(".course-list");
@@ -13,7 +13,7 @@ let keyword= "";
 // API
 
 const getCourseAPI = () =>{
-    return axios.get(`${URL_API}?topic=${topic}&keyword=${keyword}`);
+    return axios.get(`${URL_API}/api/v1/courses?topic=${topic}&keyword=${keyword}`);
 }
 
 
@@ -22,8 +22,6 @@ const getCourseAPI = () =>{
 const getCourse = async () =>{
     try{
         let res = await getCourseAPI(); // Api get all course
-
-        console.log(res.data);
 
         // Render Course
         renderCourse(res.data);
@@ -35,8 +33,6 @@ const getCourse = async () =>{
 
 
 const renderCourse = (arr) =>{
-
-
 
     courseList.innerHTML = "";
     let html = "";

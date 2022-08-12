@@ -1,6 +1,6 @@
 
 
-const URL_API = "http://localhost:8080/api/v1/courses/online";
+const URL_API = "http://localhost:8080";
 
 
 const courseList = document.querySelector(".course-list");
@@ -14,7 +14,7 @@ let keyword= "";
 // API
 
 const getCourseAPI = (topic, keyword) =>{
-    return axios.get(`${URL_API}?topic=${topic}&keyword=${keyword}`);
+    return axios.get(`${URL_API}/api/v1/courses/online?topic=${topic}&keyword=${keyword}`);
 }
 
 
