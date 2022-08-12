@@ -4,7 +4,10 @@ import com.example.Day15_MidTerm.model.Course;
 import com.example.Day15_MidTerm.database.FakeDB;
 
 import com.example.Day15_MidTerm.exception.NotFoundException;
+import com.example.Day15_MidTerm.model.CourseDetail;
+import com.example.Day15_MidTerm.model.Supporter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,17 +16,32 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CourseRepository {
-    // Repository : Chứa các phương thức để thao tác với database
 
-    // Ví dụ demo
+
+
     // Lấy danh sách tất cả khóa học
-    public List<Course> getAll() {
-        return FakeDB.courses;
+    public List<Course> getAll(String topic, String title) {
+
+        if(topic != ""){
+            if(title == ""){
+                return getCourseByTopic(topic);
+            }else{
+                return getCourseByTopicAndTitle(FakeDB.courses, topic, title);
+            }
+        }else{
+            if(title == ""){
+                return FakeDB.courses;
+            }else{
+                return getCourseByTitle(title);
+            }
+        }
+
+
     }
 
 
     // find course by id
-    public Course getCourse(int id){
+    public Course getCourseById(int id){
         return findCourseById(id).orElseThrow(() ->{
             throw new NotFoundException("Course with id = " + id + " can not found");
         });
@@ -53,29 +71,25 @@ public class CourseRepository {
     // Get course by topic and title
     public List<Course> getCourseByTopicAndTitle(List<Course>lstCourse, String topic, String title){
 
-        if(topic == null){
-            if(title != null) {
+        if(topic == ""){
+            if(title != "") {
                 return lstCourse.stream()
                         .filter(c -> c.getTitle().toLowerCase().contains(title.toLowerCase()))
                         .collect(Collectors.toList());
             }else{
                 return lstCourse;
             }
+        }else {
+            if(title == ""){
+                return lstCourse.stream()
+                        .filter(c -> c.getTopics().contains(topic))
+                        .collect(Collectors.toList());
+            }else{
+                return lstCourse.stream()
+                        .filter(c -> c.getTitle().toLowerCase().contains(title.toLowerCase()) && c.getTopics().contains(topic))
+                        .collect(Collectors.toList());
+            }
         }
-
-        if(title == null){
-
-            return lstCourse.stream()
-                            .filter(c -> c.getTopics().contains(topic))
-                            .collect(Collectors.toList());
-        }
-
-        else {
-            return lstCourse.stream()
-                             .filter(c -> c.getTitle().toLowerCase().contains(title.toLowerCase()) && c.getTopics().contains(topic))
-                             .collect(Collectors.toList());
-        }
-
     }
 
 
