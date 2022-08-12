@@ -58,13 +58,13 @@ const renderCourseDetail = (obj) =>{
         </div>
 
         <div class="main p-4 shadow-sm">
-            <h2 class="course-title fs-5">Lập trình di động IOS Swift online</h2>
+            <h2 class="course-title fs-5">${obj.course.title}</h2>
 
             <hr>
 
             <div class="supporter d-flex align-items-center">
                 <div class="supporter-image">
-                    <img src="https://media.techmaster.vn/api/static/crop/bv9jp4k51co7nj2mhht0" alt="tư vấn viên" class="rounded-circle w-75 h-75">
+                    <img src="${obj.supporter.avatar}" alt="tư vấn viên" class="rounded-circle w-75 h-75">
                 </div>
                 <div class="supporter-info">
                     <p>
