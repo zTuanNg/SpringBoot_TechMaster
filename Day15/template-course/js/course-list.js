@@ -1,4 +1,4 @@
-const URL_API = "http://localhost:8080";
+const URL_API = "https://mini-courses-website.herokuapp.com";
 
 
 const courseList = document.querySelector(".course-list");

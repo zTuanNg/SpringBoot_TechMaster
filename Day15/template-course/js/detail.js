@@ -1,7 +1,7 @@
 
 
 const params=new URLSearchParams(window.location.search);
-const URL_API = "http://localhost:8080";
+const URL_API = "https://mini-courses-website.herokuapp.com";
 const container = document.querySelector(".container");
 // API
 
