@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tạo khóa học</title>
+
+    <!-- Link google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&amp;display=swap"
+          rel="stylesheet">
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Link select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+
+    <!-- Link tự viết -->
+    <link rel="stylesheet" href="/css/style-admin.css">
+</head>
+
+<body>
+<!--HEADER-->
+<div class="header d-flex align-items-center">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-start align-items-center">
+            <div class="logo">
+                <a th:href="@{/courses}">
+                    <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
+                         alt="logo"
+                    >
+                </a>
+            </div>
+            <div class="menu">
+                <a class="text-white ms-5" th:href="@{/courses}">Danh sách khóa học</a>
+                <a class="text-white ms-3" th:href="@{/courses/new}">Tạo khóa học</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div class="course-list mt-4 mb-4">
+
+
+<!--    Create Form-->
+
+    <form th:action="@{/courses/save}" method="post" th:object="${course}"  enctype="multipart/form-data">
+        <input type="hidden" class="form-control" id="course-id" th:field="*{id}">
+        <div class="container">
+            <div class="mb-4 d-flex justify-content-between">
+                <div>
+                    <button class="btn-custom btn-update-course" type="submit">
+                        <span><i class="fa-solid fa-plus"></i></span>
+                        Cập nhật
+                    </button>
+                    <a th:href="@{/courses}" class="btn-custom btn-refresh">
+                        <span><i class="fa-solid fa-angle-left"></i></span>
+                        Quay lại
+                    </a>
+                </div>
+                <div>
+                    <a class="btn-custom btn-delete-course bg-danger"
+                        th:href="@{/courses/delete/{id} (id=${course.id})}"
+                        th:data-confirm-delete="|Are you sure you want to delete this course with id =  ${course.id}?|"
+                        onclick="return confirm(this.getAttribute('data-confirm-delete'))">
+                        <span><i class="fa-solid fa-trash-can"></i></span>
+                        Xóa
+                    </a>
+                </div>
+            </div>
+
+            <div class="course-list-inner p-2">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label for="course-name" class="form-label fw-bold">Tên khóa học</label>
+                            <input type="text" class="form-control" id="course-name" th:field="*{title}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="course-description" class="form-label fw-bold">Mô tả</label>
+                            <textarea class="form-control" id="course-description" rows="10" th:field="*{description}" required ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="course-type" class="form-label fw-bold">Hình thức học</label>
+                            <select class="form-control" id="course-type" th:field="*{type}" >
+<!--                                <option hidden>- Chọn hình thức học</option>-->
+                                <option value="online">Online</option>
+                                <option value="onlab">Onlab</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="course-topic" class="form-label fw-bold">Chủ đề</label>
+                            <select class="form-control" id="course-topic" multiple="multiple" th:field="*{topics}">
+                                <option th:each="topic : ${lstTopic}"
+                                        th:value="${topic.name}"
+                                        th:text="${topic.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="course-supporter" class="form-label fw-bold">Tư vấn viên</label>
+                            <select class="form-control" id="course-supporter" th:field="*{supporterId}">
+                                <option th:each="spt : ${supporters}"
+                                        th:value="${spt.id}"
+                                        th:text="${spt.name}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Thumnail</label>
+                            <div class="course-logo-preview mb-3 rounded">
+
+                                <img id="course-logo-preview" class="rounded" th:src="@{${course.pathImage}}" >
+                            </div>
+
+                            <label for="course-logo-input" class="btn btn-warning">Đổi ảnh
+<!--                                <input type="hidden" th:field="*{image}" />-->
+                                <input type="file"
+                                       id="course-logo-input"
+                                       class="d-none"
+                                       name="picture"
+                                       accept="image/png, image/bmp, image/jpeg"
+                                       >
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- axios -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!-- select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script th:inline="javascript">
+
+   let course = [[${course}]]
+   let idx = []
+   idx = course.topics;
+
+    // Truy cập vào các thành phần
+    const courseName = document.getElementById("course-name");
+    const courseDescription = document.getElementById("course-description");
+    const courseType = document.getElementById("course-type");
+    const courseTopic = $("#course-topic");
+    const courseSupporter = document.getElementById("course-supporter");
+    const courseThumbnailPreview = document.getElementById("course-logo-preview");
+    const topicCourse = document.getElementById("#course-topic");
+    const btnDelete = document.getElementById("btn-delete");
+
+    // Kích hoạt select2
+    courseTopic.select2({
+        placeholder: "- Chọn chủ đề",
+    });
+
+    const initCourse = (course) => {
+        courseTopic.val(idx).trigger("change");
+    }
+
+    /////
+   // course-logo-input
+   $(document).ready(function() {
+
+       $("#course-logo-input").change(function(){
+           // fileSize = this.files[0].size;
+           // if(fileSize > 1048576){
+           //     this.setCustomValidity("You must choose image less than 1mb!");
+           //     this.reportValidity();
+           // }else{
+           //     showImageThumbnail(this);
+           // }
+           showImageThumbnail(this)
+
+       });
+   });
+
+   function showImageThumbnail(fileInput){
+       let file = fileInput.files[0];
+       let reader = new FileReader();
+       reader.onload = function(e){
+           $("#course-logo-preview").attr("src", e.target.result);
+       };
+       reader.readAsDataURL(file);
+   };
+
+   initCourse(course);
+
+
+
+
+
+
+
+</script>
+</body>
+
+</html>

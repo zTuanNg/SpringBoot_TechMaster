@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Danh sách khóa học</title>
+
+    <!-- Link google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&amp;display=swap"
+        rel="stylesheet">
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Link tự viết -->
+    <link rel="stylesheet" href="/css/style-admin.css">
+</head>
+
+<body>
+    <!--HEADER-->
+    <div class="header d-flex align-items-center">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-start align-items-center">
+                <div class="logo">
+                    <a th:href="@{/courses}">
+                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo">
+                    </a>
+                </div>
+                <div class="menu">
+                    <a class="text-white ms-5" th:href="@{/courses}">Danh sách khóa học</a>
+                    <a class="text-white ms-3" th:href="@{/courses/new}">Tạo khóa học</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="course-list mt-4 mb-4">
+        <div class="container">
+            <div class="mb-4">
+                <a th:href="@{/courses/new}" class="btn-custom btn-create-course">
+                    <span><i class="fa-solid fa-plus"></i></span>
+                    Tạo khóa học
+                </a>
+                <a th:href="@{/courses}" class="btn-custom btn-refresh">
+                    <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
+                    Refresh
+                </a>
+            </div>
+
+            <div class="course-list-inner p-2">
+                <table class="table course-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên khóa học</th>
+                            <th>Hình thức</th>
+                            <th>Chủ đề</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course: ${courses}" >
+                            <td class="stt"></td>
+                            <td>
+                                <a th:href="@{/courses/detail/{id} (id=${course.id})}">[[${course.title}]]</a>
+                            </td>
+                            <td th:class="${course.type == 'online' ? 'text-warning' : 'text-info'}">
+                                [[${course.type}]]
+                            </td>
+                            <td>[[${course.topicString}]]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script th:inline="javascript">
+
+    let totalCourses = [[${totalCourse}]]
+
+    const sttCourse = document.querySelectorAll(".stt");
+
+    for(let i = 1; i <= Number(totalCourses); i++){
+        // console.log(sttCourse[i].textContent);
+        sttCourse[i-1].textContent = i;
+    }
+
+</script>
+</body>
+
+</html>
